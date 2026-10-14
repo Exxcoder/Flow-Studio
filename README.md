@@ -1,106 +1,152 @@
+<div align="center">
+
+<img src="./app-icon.png" alt="Project Flow Studio Logo" width="128" height="128" />
+
 # Project Flow Studio
 
-Десктопный дашборд для декомпозиции проектов: бесконечный холст, смарт-блоки этапов, Bezier-связи, свободное рисование и выгрузка графа в LLM-промпт. Стек: **Tauri v2 + React + TypeScript + Vite + Tailwind CSS**.
+**Интуитивный десктопный инструмент для декомпозиции архитектуры, проектирования пайплайнов и генерации структурированных LLM-промптов.**
 
-## Дерево проекта
+[![Tauri v2](https://img.shields.io/badge/Tauri-v2-24C8DB?style=for-the-badge&logo=tauri&logoColor=white)](https://tauri.app/)
+[![React 19](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-8.0-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
-```
+[Скачать релиз](#-установка-и-скачивание) • [Возможности](#-основные-возможности) • [Горячие клавиши](#-управление-и-горячие-клавиши) • [Сборка](#-локальная-разработка-и-сборка)
+
+</div>
+
+---
+
+## 💡 О проекте
+
+**Project Flow Studio** решает проблему фрагментированного планирования задач и архитектурных систем. Вместо громоздких диаграмм или линейных списков задач вы получаете гибкий бесконечный холст, где визуальная схема проекта преобразуется в готовые промпты для LLM (ChatGPT, Claude, DeepSeek, Gemini).
+
+Приложение скомпилировано с помощью **Tauri v2**, что обеспечивает минимальное потребление RAM, мгновенный старт и независимость от тяжелого рантайма Electron.
+
+---
+
+## ✨ Основные возможности
+
+- 🚀 **Бесконечный холст**: плавное панорамирование и масштабирование без потери производительности.
+- 🧩 **Смарт-блоки этапов**: создание карточек задач, компонентов, этапов разработки и зависимостей.
+- 🧲 **Bezier-связи**: умные магнитные порты для объединения сущностей в направленный граф.
+- ✏️ **Свободное рисование и фигуры**: скетчинг от руки, аннотации и подсветка областей прямо на полотне.
+- 🤖 **Экспорт в LLM-контекст**: мгновенная компиляция графа связей в структурированный Markdown/JSON-промпт для ИИ-ассистентов.
+- 💾 **Автономный формат `.pflow`**: локальное хранение данных без привязки к облаку.
+- 🖼 **Экспорт в изображения**: сохранение всей схемы или выбранных фрагментов в PNG с высоким разрешением.
+- 🪟 **Нативный кастомный интерфейс**: бескаркасное окно (frameless window) с интеграцией системных диалогов Windows.
+
+---
+
+## 📥 Установка и скачивание
+
+Готовые сборки под Windows доступны на вкладке **[Releases](https://github.com/Exxcoder/Flow-Studio/releases)**:
+
+| Тип | Файл | Описание |
+|---|---|---|
+| **Installer (Рекомендуется)** | `flow-studio_x64-setup.exe` | Автоматическая установка через NSIS с ярлыками и деинсталлятором |
+| **Portable** | `flow-studio.exe` | Автономный запуск без установки |
+| **Корпоративный пакет** | `*.msi` | Пакет для системного развертывания |
+
+> **Примечание:** Для работы требуется установленный в Windows компонент **Microsoft Edge WebView2** (по умолчанию присутствует в Windows 10/11).
+
+---
+
+## ⌨️ Управление и горячие клавиши
+
+| Действие | Горячая клавиша / Мышь |
+|---|---|
+| **Панорама холста** | Зажать `Колесо мыши` или `Пробел + ЛКМ` |
+| **Масштабирование (Zoom)** | `Ctrl + Колесо мыши` (от 20% до 300%) |
+| **Создание связи** | Потянуть за точку-порт на границе карточки |
+| **Удаление элемента** | Выбрать блок / связь / фигуру и нажать `Delete` |
+| **Сохранить проект** | `Ctrl + S` (сохранение в `.pflow`) |
+| **Открыть проект** | `Ctrl + O` |
+
+---
+
+## 🛠 Технологический стек
+
+- **Ядро десктопа**: [Tauri v2](https://tauri.app/) (Rust)
+- **Фронтенд-фреймворк**: [React 19](https://react.dev/)
+- **Сборщик**: [Vite](https://vitejs.dev/)
+- **Стилизация**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Стейт-менеджмент**: [Zustand](https://github.com/pmndrs/zustand)
+- **Иконки**: [Lucide React](https://lucide.dev/)
+- **Экспорт графики**: [html-to-image](https://github.com/bubkoo/html-to-image)
+
+---
+
+## 📁 Структура проекта
+
+```text
 Flow-Studio/
-├── src/                          # React UI
-│   ├── App.tsx
-│   ├── index.css
-│   ├── types.ts
+├── src/                          # React UI & Canvas Logic
 │   ├── components/               # TitleBar, Board, Node, Connections, Export
-│   ├── lib/                      # geometry, graph, prompt, io
-│   └── store/projectStore.ts
-├── src-tauri/                    # Rust / окно / сборка .exe
-│   ├── capabilities/default.json
-│   ├── icons/                    # icon.ico, png (после `tauri icon`)
-│   ├── src/{lib,main}.rs
-│   ├── Cargo.toml
-│   └── tauri.conf.json
-├── scripts/generate-icon.ps1
-├── app-icon.png                  # исходник иконки 1024×1024
+│   ├── lib/                      # Геометрия связей, построение графа, prompt builder
+│   ├── store/                    # Zustand-хранилище состояния холста
+│   ├── App.tsx                   # Корневой компонент
+│   └── main.tsx                  # Точка входа Vite
+├── src-tauri/                    # Rust-часть приложения Tauri
+│   ├── capabilities/             # Безопасность и доступы к API ОС
+│   ├── icons/                    # Набор иконок приложения (.ico, .png)
+│   ├── src/                      # Системные хэндлеры и вызовы WinAPI
+│   └── tauri.conf.json           # Конфигурация окна и сборщика
+├── app-icon.png                  # Исходник логотипа (1024×1024)
 ├── package.json
 └── vite.config.ts
 ```
 
-## Требования
+---
 
-- Node.js 20+
-- Rust (rustup) + Visual Studio Build Tools (MSVC, Windows 10 SDK)
-- WebView2 Runtime (обычно уже есть в Windows 10/11)
+## 🚀 Локальная разработка и сборка
 
-## Разработка
+### Предварительные требования
+
+1. **Node.js** v20+
+2. **Rust** (`rustup`)
+3. **C++ Build Tools** (Visual Studio Build Tools с компонентом *Desktop development with C++*)
+
+### Запуск в режиме разработки
 
 ```powershell
-cd G:\AIProject\Flow-Studio
+# 1. Клонирование репозитория
+git clone git@github.com:Exxcoder/Flow-Studio.git
+cd Flow-Studio
+
+# 2. Установка зависимостей
 npm install
+
+# 3. Запуск десктопного приложения с Hot-Reload
 npm run tauri dev
 ```
 
-Только фронтенд (без окна Tauri): `npm run dev`.
+> Для быстрой отладки UI только в браузере (без бэкенда Tauri) запустите `npm run dev`.
 
-## Иконка приложения
+### Релизная сборка бинарников
 
-1. Положите квадратный PNG **1024×1024** как `app-icon.png` в корень репозитория  
-   либо сгенерируйте демо-иконку:
-
-   ```powershell
-   powershell -ExecutionPolicy Bypass -File .\scripts\generate-icon.ps1
-   ```
-
-2. Нарежьте полный набор (`icon.ico`, `.icns`, `32x32.png`, `128x128.png`, `128x128@2x.png`) встроенной утилитой Tauri:
-
-   ```powershell
-   npx tauri icon .\app-icon.png
-   ```
-
-   Файлы появятся в `src-tauri/icons/`. Пути уже прописаны в `tauri.conf.json` → `bundle.icon`.
-
-3. Свой `icon.ico` можно скопировать напрямую в `src-tauri/icons/icon.ico` — инсталлятор и exe подхватят его при следующей сборке.
-
-## Конфигурация окна и бандла (`src-tauri/tauri.conf.json`)
-
-- `app.windows[0].decorations: false` — бескаркасное окно, кастомный TitleBar.
-- `bundle.targets: ["nsis", "msi"]` — инсталляторы Windows.
-- `bundle.icon` — набор иконок после `npx tauri icon`.
-- Capabilities (`src-tauri/capabilities/default.json`): управление окном, диалоги, чтение/запись выбранных файлов `.pflow` / `.png`.
-
-## Релизная сборка .exe
-
-Из корня проекта:
+Сборка оптимизированного `.exe` и установщиков:
 
 ```powershell
-npm run tauri build
+npm run tauri:build
 ```
 
-Эквивалент: `npx tauri build` / `cargo tauri build`.
-
-Артефакты:
-
-| Файл | Назначение |
-|------|------------|
-| `src-tauri\target\release\flow-studio.exe` | standalone exe (ресурсы фронтенда вшиты в бинарь) |
-| `src-tauri\target\release\bundle\nsis\*.exe` | NSIS-инсталлятор (single-file setup) |
-| `src-tauri\target\release\bundle\msi\*.msi` | MSI |
-
-Портативный запуск: копируйте `flow-studio.exe`. WebView2 должен быть установлен в системе.
-
-Только NSIS:
-
-```powershell
-npx tauri build --bundles nsis
+Результаты сборки будут доступны в каталоге:
+```text
+src-tauri/target/release/
+├── flow-studio.exe                       # Standalone исполняемый файл
+└── bundle/
+    ├── nsis/flow-studio_x64-setup.exe    # NSIS-инсталлятор
+    └── msi/flow-studio_x64.msi           # MSI-инсталлятор
 ```
 
-## Управление холстом
+---
 
-- Панорама: средняя кнопка мыши или Space + ЛКМ
-- Масштаб: Ctrl + колесо (20%–300%)
-- Связи: потянуть магнитный порт карточки на порт другой карточки
-- Delete — удалить выбранный этап / связь / фигуру
-- Ctrl+S / Ctrl+O — сохранить / открыть `.pflow`
+## 📄 Лицензия
 
-## Формат `.pflow`
+Проект распространяется под лицензией **MIT**. Подробности в файле [LICENSE](LICENSE).
 
-JSON (`version: 1`) с полями `name`, `camera`, `nodes`, `connections`, `strokes`, `shapes` — координаты мира, порты связей и полилинии кисти.
+<div align="center">
+  <sub>Разработано <a href="https://github.com/Exxcoder">Exxcoder</a></sub>
+</div>
