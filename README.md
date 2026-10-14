@@ -142,11 +142,3 @@ src-tauri/target/release/
 ```
 
 ---
-
-## 📄 Лицензия
-
-Проект распространяется под лицензией **MIT**. Подробности в файле [LICENSE](LICENSE).
-
-<div align="center">
-  <sub>Разработано <a href="https://github.com/Exxcoder">Exxcoder</a></sub>
-</div>
